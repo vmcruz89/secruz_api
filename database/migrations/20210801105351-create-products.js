@@ -30,23 +30,27 @@ module.exports = {
       },
       quantity: {
         allowNull: true,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
       },
       promotioPrice: {
         allowNull: true,
         type: DataTypes.DECIMAL(10,2),
+        field: 'promotion_price',
       },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'created_at',
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'updated_at',
       },
       deletedAt: {
         allowNull: true,
         type: DataTypes.DATE,
+        field: 'deleted_at',
       },
     });
   },

@@ -20,25 +20,21 @@ module.exports = {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      surname: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
       email: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
         unique: true,
       },
       password: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       phone: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(50),
       },
       address: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       type: {
@@ -48,28 +44,32 @@ module.exports = {
         }),
       },
       cpf: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
       },
       photo: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING,
       },
       indicatedBy: {
         allowNull: true,
         type: DataTypes.STRING,
+        field: 'indicated_by',
       },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'created_at',
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'updated_at',
       },
       deletedAt: {
         allowNull: true,
         type: DataTypes.DATE,
+        field: 'deleted_at',
       },
     });
   },

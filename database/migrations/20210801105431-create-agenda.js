@@ -19,14 +19,17 @@ module.exports = {
       dateBegin: {
         allowNull: true,
         type: DataTypes.DATE,
+        field: 'date_begin',
       },
       dateEnd: {
         allowNull: true,
         type: DataTypes.DATE,
+        field: 'date_end',
       },
       customerId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        field: 'customer_id',
         references: {
           model: {
             tableName: 'users',
@@ -37,6 +40,7 @@ module.exports = {
       serviceId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        field: 'service_id',
         references: {
           model: {
             tableName: 'services',
@@ -47,6 +51,7 @@ module.exports = {
       employeeId: {
         allowNull: false,
         type: DataTypes.INTEGER,
+        field: 'employee_id',
         references: {
           model: {
             tableName: 'users',
@@ -57,14 +62,17 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'created_at',
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'updated_at',
       },
       deletedAt: {
         allowNull: true,
         type: DataTypes.DATE,
+        field: 'deleted_at',
       },
     });
   },

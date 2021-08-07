@@ -14,7 +14,19 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: DataTypes.STRING,
     updatedAt: DataTypes.STRING,
     deletedAt: DataTypes.STRING,
-  });
+  }, {
+    hooks: {
+       beforeCreate: function (user, options, fn) {
+           user.createdAt = new Date();
+           user.updatedAt = new Date();
+           fn(null, user);
+       },
+       beforeUpdate: function (user, options, fn) {
+           user.updatedAt = new Date();
+           fn(null, user);
+       }
+   }
+});
 
   return User;
 }

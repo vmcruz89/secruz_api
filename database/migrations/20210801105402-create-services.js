@@ -31,22 +31,27 @@ module.exports = {
       promotioPrice: {
         allowNull: true,
         type: DataTypes.DECIMAL(10,2),
+        field: 'promotion_price',
       },
       averageMinutes: {
         allowNull: true,
         type: DataTypes.INTEGER,
+        field: 'average_minutes',
       },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'created_at',
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
+        field: 'updated_at',
       },
       deletedAt: {
         allowNull: true,
         type: DataTypes.DATE,
+        field: 'deleted_at',
       },
     });
   },
