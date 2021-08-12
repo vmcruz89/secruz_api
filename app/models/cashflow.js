@@ -1,6 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const CashFlow = sequelize.define('CashFlow', {
-    id: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     type: DataTypes.STRING,
     customerId: DataTypes.INTEGER,
     employeeId: DataTypes.INTEGER,
@@ -9,6 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: DataTypes.STRING,
     updatedAt: DataTypes.STRING,
     deletedAt: DataTypes.STRING,
+  },
+  {
+    timestamps: false,
+    paranoid: true,
+    underscored: true,
+    freezeTableName: true,
+    tableName: 'cashflow'
   });
 
   return CashFlow;
