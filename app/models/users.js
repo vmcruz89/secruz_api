@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: DataTypes.STRING,
-    surname: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     phone: DataTypes.INTEGER,
@@ -14,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     cpf: DataTypes.INTEGER,
     photo: DataTypes.STRING,
-    indicatedy: DataTypes.STRING,
+    indicatedBy: DataTypes.STRING,
     createdAt: DataTypes.STRING,
     updatedAt: DataTypes.STRING,
     deletedAt: DataTypes.STRING,
