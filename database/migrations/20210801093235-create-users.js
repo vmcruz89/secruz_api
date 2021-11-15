@@ -29,6 +29,11 @@ module.exports = {
         allowNull: true,
         type: DataTypes.STRING,
       },
+      verified: {
+        allowNull: false, 
+        type: DataTypes.BOOLEAN, 
+        defaultValue: false
+      },
       phone: {
         allowNull: false,
         type: DataTypes.STRING(50),
