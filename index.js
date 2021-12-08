@@ -4,10 +4,19 @@ const express = require('express');
 const { User } = require('./app/models');
 const bcrypt = require('bcrypt');
 
+express.application.prefix = express.Router.prefix = function(path, configure) {
+  var router = express.Router();
+  this.use(path, router);
+  configure(router);
+  return router;
+}
+
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 
+
+/* Routes - Begin */
 app.get('/', (req, res) => {
   res.send('Oi! Essa é a API do Studio Eraldo Cruz');
 }); 
@@ -19,28 +28,24 @@ app.post('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { email } });
 
-    // Check the email
-    // If there's not exists
-    // Throw the error
+    /* Throw an error if email not exists */
     if (!user) return res.status(422).json({ validation: "User not found" });
 
-    // Check the password
+    /* Check the password */ 
     let checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword)
       return res.status(422).json({ validation: "Invalid credentials" });
 
-    // Check user if not activated yet
-    // If not activated, send error response
+    /* Throw the error if account not verified */
     if (user && !user.verified)
       return res
         .status(400)
         .json({errors: "Your account is not active yet."});
 
-    // If the requirement above pass
-    // Lets send the response with JWT token in it
+    /* Build authentication payload */
     const payload = {
       user: {
-        id: user.id,
+        userId: user.id,
         name: user.name,
         email: user.email,
       },
@@ -52,6 +57,7 @@ app.post('/login', async (req, res, next) => {
       { expiresIn: 3600 }
     );
 
+    /* Reponse with authentication token */
     res.status(200).json({ token });
   
   } catch (err) {
@@ -63,21 +69,30 @@ app.post('/logout', verifyJWT, function(req, res) {
   res.json({ auth: false, token: null });
 })
 
-app.get('/users', verifyJWT, async (req, res) => {
-  // let user = await User.findAll({where: {'id': 33}, raw: true}); //Filtering by User Id
-  let user = await User.findAll();
-  user = JSON.parse(JSON.stringify(user));
-  res.status(200).send((user).toString());
+app.prefix("/users", (users) => {
+  users.route('/').post(verifyJWT, (req, res) => {
+    // ToDo: Implementar cadastro de usuários
+    });
+  
+    users.route('/').get(verifyJWT, async (req, res) => {
+    let user = await User.findAll();
+    res.status(200).send(user);
+  });
+  
+  users.route('/:id').get(verifyJWT, async (req, res) => {
+      let user = await User.findAll({where: {'id': req.params.id}, raw: true})
+      res.status(200).send(user);
+  });
+  
+  users.route('/:id').put(verifyJWT, (req, res) => {
+    // ToDo: Implementar edição de usuários
+  });
+  
+  users.route('/:id').delete(verifyJWT, (req, res) => {
+    // ToDo: Implementar deleção de usuários
+  });
 });
-app.post('/users', verifyJWT, (req, res) => {
-//   const user = await User.create(req.body);
-//   res.json(user);
-});
-app.get('/users/:id', (req, res) => {});
-app.put('/users/:id', verifyJWT, (req, res) => {});
-app.delete('/users/:id', verifyJWT, (req, res) => {});
-
-
+/* Routes - End */
 
 
 function verifyJWT(req, res, next){
@@ -86,12 +101,9 @@ function verifyJWT(req, res, next){
   
   jwt.verify(token, process.env.SECRET, function(err, decoded) {
     if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
-    
-    // se tudo estiver ok, salva no request para uso posterior
-    req.userId = decoded.id;
+    // req.userId = decoded.id;
     next();
   });
 }
-
 
 app.listen(3000);
